@@ -54,7 +54,7 @@ class _LoginFormState extends State<LoginForm> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.deepPurpleAccent,
                     ),
-                    onPressed: isLoginValid.isFormValid
+                    onPressed: loginStore.isFormValid
                         ? () {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
@@ -78,6 +78,4 @@ class _LoginFormState extends State<LoginForm> {
       ),
     );
   }
-
-  LoginStore get isLoginValid => loginStore;
 }

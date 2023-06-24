@@ -1,4 +1,5 @@
 import 'dart:developer';
+
 import 'package:mobx/mobx.dart';
 part 'login_store.g.dart';
 
@@ -7,18 +8,18 @@ class LoginStore = _LoginStore with _$LoginStore;
 abstract class _LoginStore with Store {
   _LoginStore() {
     autorun((_) {
-      log('Email: $email');
+      log(email);
     });
   }
 
   @observable
   String email = '';
 
-  @action
-  void setEmail(String value) => email = value;
-
   @observable
   String password = '';
+
+  @action
+  void setEmail(String value) => email = value;
 
   @action
   void setPassword(String value) => password = value;
