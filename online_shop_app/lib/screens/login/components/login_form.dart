@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:online_shop_app/components/text_field_with_icon/text_field_with_icon.dart';
+import 'package:online_shop_app/screens/home/home_screen.dart';
 import 'package:online_shop_app/stores/login/login_store.dart';
 
 class LoginForm extends StatefulWidget {
@@ -25,7 +28,7 @@ class _LoginFormState extends State<LoginForm> {
           children: [
             SizedBox(
               width: double.infinity,
-              child: _TextFieldWithIcon(
+              child: TextFieldWithIcon(
                 prefixIcon: Icons.person_2_rounded,
                 labelText: 'E-mail',
                 onChanged: loginStore.setEmail,
@@ -35,7 +38,7 @@ class _LoginFormState extends State<LoginForm> {
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
-              child: _TextFieldWithIcon(
+              child: TextFieldWithIcon(
                 prefixIcon: Icons.lock,
                 labelText: 'Senha',
                 onChanged: loginStore.setPassword,
@@ -43,98 +46,36 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.deepPurpleAccent,
-              ),
-              onPressed: () {
-                print(loginStore.email);
-                print(loginStore.password);
+            Observer(
+              builder: (_) {
+                return SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurpleAccent,
+                    ),
+                    onPressed: isLoginValid.isFormValid
+                        ? () {
+                            MaterialPageRoute(
+                              builder: (context) => const HomeScreen(
+                                title: "Aplicativo Teste",
+                              ),
+                            );
+                          }
+                        : null,
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                );
               },
-              child: const Text('Login', style: TextStyle(color: Colors.white)),
             ),
           ],
         ),
       ),
     );
   }
-}
 
-class _TextFieldWithIcon extends StatefulWidget {
-  final IconData prefixIcon;
-  final String labelText;
-  final void Function(String) onChanged;
-  final bool isPassword;
-
-  const _TextFieldWithIcon({
-    Key? key,
-    required this.prefixIcon,
-    required this.labelText,
-    required this.onChanged,
-    this.isPassword = false,
-  }) : super(key: key);
-
-  @override
-  _TextFieldWithIconState createState() => _TextFieldWithIconState();
-}
-
-class _TextFieldWithIconState extends State<_TextFieldWithIcon> {
-  bool obscureText = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      obscureText: widget.isPassword ? obscureText : false,
-      style: const TextStyle(color: Colors.black),
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.black.withOpacity(0.1), // Lighter background color
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-          borderSide: BorderSide(
-              color: Colors.white.withOpacity(0.3)), // Lighter border color
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-          borderSide: const BorderSide(
-              color: Colors.white), // Darker border color when focused
-        ),
-        prefixIcon: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            padding: const EdgeInsets.all(1),
-            decoration: BoxDecoration(
-              color: Colors.black26,
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: Icon(
-              widget.prefixIcon,
-              size: 20,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        labelText: widget.labelText,
-        labelStyle: const TextStyle(color: Colors.white),
-        suffixIcon: widget.isPassword
-            ? IconButton(
-                icon: Icon(
-                  obscureText ? Icons.visibility : Icons.visibility_off,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  setState(() {
-                    obscureText = !obscureText;
-                  });
-                },
-              )
-            : null,
-      ),
-      onChanged: widget.onChanged,
-    );
-  }
+  LoginStore get isLoginValid => loginStore;
 }
