@@ -1,6 +1,6 @@
 {
-    "name": "online_shop_app",
-    "short_name": "online_shop_app",
+    "name": "todo_list_app",
+    "short_name": "todo_list_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

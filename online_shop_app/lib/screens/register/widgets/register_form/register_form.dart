@@ -1,28 +1,27 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:todo_list_app/screens/home/home_screen.dart';
-import 'package:todo_list_app/screens/register/register_screen.dart';
+import 'package:todo_list_app/screens/login/login_screen.dart';
 import 'package:todo_list_app/services/auth/auth_service.dart';
+import 'package:todo_list_app/stores/register/register_store/register_store.dart';
 import 'package:todo_list_app/widgets/text_field_with_icon/text_field_with_icon.dart';
-import 'package:todo_list_app/stores/login/login_store.dart';
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+class RegisterForm extends StatefulWidget {
+  const RegisterForm({super.key});
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  State<RegisterForm> createState() => _RegisterFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
-  LoginStore loginStore = LoginStore();
+class _RegisterFormState extends State<RegisterForm> {
+  RegisterStore registerStore = RegisterStore();
 
   handleSubmit() async {
-    await Auth().signInWithEmailAndPassword(
-      loginStore.email,
-      loginStore.password,
-    );
+    if (registerStore.isFormValid) {
+      await Auth().registerWithEmailAndPassword(
+        registerStore.email,
+        registerStore.password,
+      );
+    }
   }
 
   @override
@@ -42,7 +41,7 @@ class _LoginFormState extends State<LoginForm> {
               child: TextFieldWithIcon(
                 prefixIcon: Icons.person_2_rounded,
                 labelText: 'E-mail',
-                onChanged: loginStore.setEmail,
+                onChanged: registerStore.setEmail,
                 isPassword: false,
               ),
             ),
@@ -52,7 +51,17 @@ class _LoginFormState extends State<LoginForm> {
               child: TextFieldWithIcon(
                 prefixIcon: Icons.lock,
                 labelText: 'Senha',
-                onChanged: loginStore.setPassword,
+                onChanged: registerStore.setPassword,
+                isPassword: true,
+              ),
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: TextFieldWithIcon(
+                prefixIcon: Icons.lock,
+                labelText: 'Confirmar senha',
+                onChanged: registerStore.setConfirmPassword,
                 isPassword: true,
               ),
             ),
@@ -65,25 +74,19 @@ class _LoginFormState extends State<LoginForm> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.deepPurpleAccent,
                     ),
-                    onPressed: loginStore.isFormValid
+                    onPressed: registerStore.isFormValid
                         ? () async {
-                            try {
-                              await handleSubmit();
-                              // ignore: use_build_context_synchronously
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                  builder: (context) => const HomeScreen(
-                                    title: "Lista de afazeres",
-                                  ),
-                                ),
-                              );
-                            } catch (error) {
-                              log(error.toString());
-                            }
+                            await handleSubmit();
+                            // ignore: use_build_context_synchronously
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            );
                           }
                         : null,
                     child: const Text(
-                      'Login',
+                      'Cadastrar',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -99,15 +102,11 @@ class _LoginFormState extends State<LoginForm> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.deepPurpleAccent,
                     ),
-                    onPressed: () async {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const RegisterScreen(),
-                        ),
-                      );
+                    onPressed: () {
+                      Navigator.of(context).pop();
                     },
                     child: const Text(
-                      'Cadastro',
+                      'Voltar',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),

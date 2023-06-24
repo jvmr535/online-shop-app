@@ -40,6 +40,42 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016924941512:android:ea1346d097e0a6dadf89fd",
+        "android_client_info": {
+          "package_name": "com.example.todo_list_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1016924941512-29r7gtqp1kmfrd9p81uscl4foifbejq1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2QmqjhEskCY0f4Ie43irWa4deBcoXGpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016924941512-29r7gtqp1kmfrd9p81uscl4foifbejq1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1016924941512-e22nfbqpjcuhj8q6kusahossebhhthcg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.onlineShopApp"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

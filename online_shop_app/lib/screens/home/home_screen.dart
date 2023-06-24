@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:online_shop_app/screens/home/widgets/add_on_todo_list_bar/add_on_todo_list_bar.dart';
-import 'package:online_shop_app/screens/home/widgets/todo_list/todo_list.dart';
-import 'package:online_shop_app/screens/login/login_screen.dart';
+import 'package:todo_list_app/screens/home/widgets/add_on_todo_list_bar/add_on_todo_list_bar.dart';
+import 'package:todo_list_app/screens/home/widgets/todo_list/todo_list.dart';
+import 'package:todo_list_app/screens/login/login_screen.dart';
+import 'package:todo_list_app/services/auth/auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.title}) : super(key: key);
@@ -23,13 +26,19 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             color: Colors.white,
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginScreen(),
-                ),
-              );
+            onPressed: () async {
+              try {
+                await Auth().signOut();
+                // ignore: use_build_context_synchronously
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginScreen(),
+                  ),
+                );
+              } catch (error) {
+                log(error.toString());
+              }
             },
             icon: const Icon(Icons.logout),
           ),

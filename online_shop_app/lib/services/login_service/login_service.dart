@@ -1,5 +1,5 @@
-import 'package:online_shop_app/models/login/login_model.dart';
-import 'package:online_shop_app/models/session/session_model/session_model.dart';
+import 'package:todo_list_app/models/login/login_model.dart';
+import 'package:todo_list_app/models/session/session_model/session_model.dart';
 
 class LoginService {
   Future<Session> login(Login login) async {

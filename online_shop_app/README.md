@@ -1,4 +1,4 @@
-# online_shop_app
+# todo_list_app
 
 A new Flutter project.
 
