@@ -28,7 +28,7 @@ class TextFieldWithIconState extends State<TextFieldWithIcon> {
       style: const TextStyle(color: Colors.black),
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.black.withOpacity(0.1), // Lighter background color
+        fillColor: Colors.black.withOpacity(0.1),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25),
           borderSide: BorderSide.none,
@@ -36,17 +36,17 @@ class TextFieldWithIconState extends State<TextFieldWithIcon> {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25),
           borderSide: BorderSide(
-              color: Colors.white.withOpacity(0.3)), // Lighter border color
+            color: Colors.white.withOpacity(0.3),
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25),
-          borderSide: const BorderSide(
-              color: Colors.white), // Darker border color when focused
+          borderSide: const BorderSide(color: Colors.white),
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            padding: const EdgeInsets.all(1),
+            padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               color: Colors.black26,
               borderRadius: BorderRadius.circular(25),
@@ -61,16 +61,21 @@ class TextFieldWithIconState extends State<TextFieldWithIcon> {
         labelText: widget.labelText,
         labelStyle: const TextStyle(color: Colors.white),
         suffixIcon: widget.isPassword
-            ? IconButton(
-                icon: Icon(
-                  obscureText ? Icons.visibility : Icons.visibility_off,
-                  color: Colors.white,
+            ? Padding(
+                padding: const EdgeInsets.all(5),
+                child: IconButton(
+                  icon: Icon(
+                    obscureText ? Icons.visibility : Icons.visibility_off,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    setState(
+                      () {
+                        obscureText = !obscureText;
+                      },
+                    );
+                  },
                 ),
-                onPressed: () {
-                  setState(() {
-                    obscureText = !obscureText;
-                  });
-                },
               )
             : null,
       ),

@@ -56,9 +56,11 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                     onPressed: isLoginValid.isFormValid
                         ? () {
-                            MaterialPageRoute(
-                              builder: (context) => const HomeScreen(
-                                title: "Aplicativo Teste",
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => const HomeScreen(
+                                  title: "Lista de afazeres",
+                                ),
                               ),
                             );
                           }

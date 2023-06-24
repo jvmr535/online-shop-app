@@ -1,14 +1,13 @@
+import 'dart:developer';
 import 'package:mobx/mobx.dart';
-
 part 'login_store.g.dart';
 
 class LoginStore = _LoginStore with _$LoginStore;
 
 abstract class _LoginStore with Store {
   _LoginStore() {
-    // funciona como se fosse um useEffect do React
     autorun((_) {
-      print(isFormValid);
+      log('Email: $email');
     });
   }
 
