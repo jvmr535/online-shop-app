@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'todo_item.dart';
+part of 'todo_item_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

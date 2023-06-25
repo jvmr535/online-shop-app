@@ -19,7 +19,7 @@ class _LoginFormState extends State<LoginForm> {
   LoginStore loginStore = LoginStore();
 
   handleSubmit() async {
-    await Auth().signInWithEmailAndPassword(
+    await AuthService().signInWithEmailAndPassword(
       loginStore.email,
       loginStore.password,
     );

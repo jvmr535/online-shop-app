@@ -17,7 +17,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
   handleSubmit() async {
     if (registerStore.isFormValid) {
-      await Auth().registerWithEmailAndPassword(
+      await AuthService().registerWithEmailAndPassword(
         registerStore.email,
         registerStore.password,
         registerStore.displayName,

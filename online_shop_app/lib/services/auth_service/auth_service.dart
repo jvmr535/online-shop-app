@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Auth {
+class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> registerWithEmailAndPassword(

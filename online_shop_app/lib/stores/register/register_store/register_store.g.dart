@@ -85,6 +85,22 @@ mixin _$RegisterStore on _RegisterStore, Store {
     });
   }
 
+  late final _$displayNameAtom =
+      Atom(name: '_RegisterStore.displayName', context: context);
+
+  @override
+  String get displayName {
+    _$displayNameAtom.reportRead();
+    return super.displayName;
+  }
+
+  @override
+  set displayName(String value) {
+    _$displayNameAtom.reportWrite(value, super.displayName, () {
+      super.displayName = value;
+    });
+  }
+
   late final _$_RegisterStoreActionController =
       ActionController(name: '_RegisterStore', context: context);
 
@@ -122,11 +138,23 @@ mixin _$RegisterStore on _RegisterStore, Store {
   }
 
   @override
+  void setDisplayName(String value) {
+    final _$actionInfo = _$_RegisterStoreActionController.startAction(
+        name: '_RegisterStore.setDisplayName');
+    try {
+      return super.setDisplayName(value);
+    } finally {
+      _$_RegisterStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 email: ${email},
 password: ${password},
 confirmPassword: ${confirmPassword},
+displayName: ${displayName},
 isEmailValid: ${isEmailValid},
 isPasswordValid: ${isPasswordValid},
 isConfirmPasswordValid: ${isConfirmPasswordValid},
