@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 import 'package:todo_list_app/screens/login/login_screen.dart';
 import 'package:todo_list_app/services/auth_service/auth_service.dart';
 import 'package:todo_list_app/stores/register/register_store/register_store.dart';
@@ -16,7 +15,7 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
-    RegisterStore registerStore = Provider.of<RegisterStore>(context);
+    RegisterStore registerStore = RegisterStore();
 
     handleSubmit() async {
       if (registerStore.isFormValid) {

@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 import 'package:todo_list_app/screens/home/home_screen.dart';
 import 'package:todo_list_app/screens/register/register_screen.dart';
 import 'package:todo_list_app/services/auth_service/auth_service.dart';
@@ -19,7 +18,7 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
-    LoginStore loginStore = Provider.of<LoginStore>(context);
+    LoginStore loginStore = LoginStore();
 
     handleSubmit() async {
       await AuthService().signInWithEmailAndPassword(

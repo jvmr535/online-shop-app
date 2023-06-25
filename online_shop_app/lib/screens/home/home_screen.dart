@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 import 'package:todo_list_app/models/todo_item/todo_item_model.dart';
 import 'package:todo_list_app/screens/home/widgets/add_on_todo_list_bar/add_on_todo_list_bar.dart';
 import 'package:todo_list_app/screens/home/widgets/todo_list/todo_list.dart';
@@ -21,7 +20,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    TodoItemStore todoItems = Provider.of<TodoItemStore>(context);
+    TodoItemStore todoItems = TodoItemStore();
 
     return Scaffold(
       backgroundColor: Colors.deepPurpleAccent,

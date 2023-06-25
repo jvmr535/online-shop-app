@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:todo_list_app/models/todo_item/todo_item_model.dart';
 import 'package:todo_list_app/services/todo_list_service/todo_list_service.dart';
 import 'package:todo_list_app/stores/todo_item/todo_item_store.dart';
@@ -18,7 +17,7 @@ class _AddOnTodoListBarState extends State<AddOnTodoListBar> {
 
   @override
   Widget build(BuildContext context) {
-    TodoItemStore todoItemStore = Provider.of<TodoItemStore>(context);
+    TodoItemStore todoItemStore = TodoItemStore();
 
     return TextField(
       onChanged: todoItemStore.setTitle,
