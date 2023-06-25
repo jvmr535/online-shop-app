@@ -6,6 +6,7 @@ import 'package:todo_list_app/screens/home/widgets/add_on_todo_list_bar/add_on_t
 import 'package:todo_list_app/screens/home/widgets/todo_list/todo_list.dart';
 import 'package:todo_list_app/screens/login/login_screen.dart';
 import 'package:todo_list_app/services/auth_service/auth_service.dart';
+import 'package:todo_list_app/services/todo_list_service/todo_list_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<TodoItem> _todoList = [];
+  final TodoListService _todoListService = TodoListService();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () async {
               try {
                 await AuthService().signOut();
-
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -47,28 +47,26 @@ class _HomeScreenState extends State<HomeScreen> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const AddOnTodoListBar(),
-            const SizedBox(height: 16),
-            Expanded(
-              child: TodoList(todoList: _todoList),
+      body: FutureBuilder<List<TodoItem>>(
+        future: _todoListService.getTodoList(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const AddOnTodoListBar(),
+                const SizedBox(height: 16),
+                Expanded(
+                  child: TodoList(todoList: snapshot.data ?? []),
+                ),
+              ],
             ),
-            // ElevatedButton(
-            //   onPressed: () async {
-            //     try {
-            //       await TodoListService().getTodoList();
-            //     } catch (error) {
-            //       log(error.toString());
-            //     }
-            //   },
-            //   child: const Text("Exibir lista de afazeres"),
-            // ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
