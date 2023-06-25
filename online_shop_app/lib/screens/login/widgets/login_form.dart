@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:todo_list_app/screens/home/home_screen.dart';
 import 'package:todo_list_app/screens/register/register_screen.dart';
-import 'package:todo_list_app/services/auth/auth_service.dart';
+import 'package:todo_list_app/services/auth_service/auth_service.dart';
 import 'package:todo_list_app/widgets/text_field_with_icon/text_field_with_icon.dart';
 import 'package:todo_list_app/stores/login/login_store.dart';
 
@@ -72,9 +72,7 @@ class _LoginFormState extends State<LoginForm> {
                               // ignore: use_build_context_synchronously
                               Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                  builder: (context) => const HomeScreen(
-                                    title: "Lista de afazeres",
-                                  ),
+                                  builder: (context) => const HomeScreen(),
                                 ),
                               );
                             } catch (error) {

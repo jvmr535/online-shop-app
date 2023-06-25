@@ -21,6 +21,9 @@ abstract class _RegisterStore with Store {
   @observable
   String confirmPassword = '';
 
+  @observable
+  String displayName = '';
+
   @action
   void setEmail(String value) => email = value;
 
@@ -29,6 +32,9 @@ abstract class _RegisterStore with Store {
 
   @action
   void setConfirmPassword(String value) => confirmPassword = value;
+
+  @action
+  void setDisplayName(String value) => displayName = value;
 
   @computed
   bool get isEmailValid =>
@@ -44,5 +50,8 @@ abstract class _RegisterStore with Store {
 
   @computed
   bool get isFormValid =>
-      isEmailValid && isPasswordValid && isConfirmPasswordValid;
+      isEmailValid &&
+      isPasswordValid &&
+      isConfirmPasswordValid &&
+      displayName.isNotEmpty;
 }

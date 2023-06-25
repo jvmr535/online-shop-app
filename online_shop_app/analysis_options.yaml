@@ -3,6 +3,7 @@ analyzer:
   errors:
     missing_return: warning
     library_private_types_in_public_api: ignore 
+    use_build_context_synchronously: ignore
 
 linter:
   rules:

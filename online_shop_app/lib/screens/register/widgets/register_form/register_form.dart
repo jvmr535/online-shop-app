@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:todo_list_app/screens/login/login_screen.dart';
-import 'package:todo_list_app/services/auth/auth_service.dart';
+import 'package:todo_list_app/services/auth_service/auth_service.dart';
 import 'package:todo_list_app/stores/register/register_store/register_store.dart';
 import 'package:todo_list_app/widgets/text_field_with_icon/text_field_with_icon.dart';
 
@@ -20,6 +20,7 @@ class _RegisterFormState extends State<RegisterForm> {
       await Auth().registerWithEmailAndPassword(
         registerStore.email,
         registerStore.password,
+        registerStore.displayName,
       );
     }
   }
@@ -39,7 +40,17 @@ class _RegisterFormState extends State<RegisterForm> {
             SizedBox(
               width: double.infinity,
               child: TextFieldWithIcon(
-                prefixIcon: Icons.person_2_rounded,
+                prefixIcon: Icons.person,
+                labelText: 'Nome',
+                onChanged: registerStore.setDisplayName,
+                isPassword: false,
+              ),
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: TextFieldWithIcon(
+                prefixIcon: Icons.email,
                 labelText: 'E-mail',
                 onChanged: registerStore.setEmail,
                 isPassword: false,

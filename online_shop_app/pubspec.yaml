@@ -40,6 +40,9 @@ dependencies:
   json_annotation: ^4.8.1
   firebase_core: ^2.14.0
   firebase_auth: ^4.6.3
+  shared_preferences: ^2.1.2
+  firebase_database: ^10.2.3
+
 
 dev_dependencies:
   flutter_test:

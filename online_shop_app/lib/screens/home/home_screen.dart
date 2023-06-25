@@ -1,22 +1,26 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:todo_list_app/models/todo_item/todo_item.dart';
 import 'package:todo_list_app/screens/home/widgets/add_on_todo_list_bar/add_on_todo_list_bar.dart';
 import 'package:todo_list_app/screens/home/widgets/todo_list/todo_list.dart';
 import 'package:todo_list_app/screens/login/login_screen.dart';
-import 'package:todo_list_app/services/auth/auth_service.dart';
+import 'package:todo_list_app/services/auth_service/auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<String> _todoList = ['Tarefa 1', 'Tarefa 2'];
+  final List<TodoItem> _todoList = [
+    TodoItem(title: "Fazer compras", done: false),
+    TodoItem(title: "Polir o chifre", done: true),
+    TodoItem(title: "Estudar flutter", done: false),
+    TodoItem(title: "Ouvir música de corno", done: true),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         actions: [
           IconButton(
-            color: Colors.white,
             onPressed: () async {
               try {
                 await Auth().signOut();
-                // ignore: use_build_context_synchronously
+
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -44,18 +47,26 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
         backgroundColor: Colors.deepPurpleAccent,
-        title: Text(
-          widget.title,
-          style: const TextStyle(color: Colors.white),
+        title: const Text(
+          "Lista de afazeres",
+          style: TextStyle(color: Colors.white),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const AddOnTodoListBar(),
-          const SizedBox(height: 16),
-          TodoList(todoList: _todoList),
-        ],
+      body: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const AddOnTodoListBar(),
+              const SizedBox(height: 16),
+              Expanded(
+                child: TodoList(todoList: _todoList),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

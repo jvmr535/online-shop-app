@@ -45,17 +45,10 @@ class TextFieldWithIconState extends State<TextFieldWithIcon> {
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            padding: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: Colors.black26,
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: Icon(
-              widget.prefixIcon,
-              size: 20,
-              color: Colors.white,
-            ),
+          child: Icon(
+            widget.prefixIcon,
+            size: 20,
+            color: Colors.white,
           ),
         ),
         labelText: widget.labelText,

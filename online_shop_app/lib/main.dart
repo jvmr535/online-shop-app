@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:todo_list_app/screens/home/home_screen.dart';
 import 'package:todo_list_app/screens/login/login_screen.dart';
-import 'package:todo_list_app/services/auth/auth_service.dart';
+import 'package:todo_list_app/services/auth_service/auth_service.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -27,9 +27,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Auth().currentUser == null
-          ? const HomeScreen(title: "Lista de afazeres")
-          : const LoginScreen(),
+      home:
+          Auth().currentUser == null ? const HomeScreen() : const LoginScreen(),
     );
   }
 }
