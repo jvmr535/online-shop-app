@@ -52,7 +52,7 @@ class _TodoListState extends State<TodoList> {
             ),
             trailing: Checkbox(
               value: widget._todoList[index].done,
-              onChanged: (value) {},
+              onChanged: (value) async {},
             ),
           );
         },

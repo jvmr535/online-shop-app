@@ -50,7 +50,10 @@ class AuthService {
 
   Stream<User?> get user => _auth.authStateChanges();
 
-  User? get currentUser => _auth.currentUser;
+  Future<String?> getCurrentUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('uid');
+  }
 
   Future<void> sendPasswordResetEmail(String email) async {
     await _auth.sendPasswordResetEmail(email: email);

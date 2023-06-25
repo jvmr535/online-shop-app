@@ -22,21 +22,33 @@ class TodoListService {
 
     if (uid == null) return <TodoItem>[];
 
-    final databaseEvent =
+    final databaseReference =
         await FirebaseDatabase.instance.ref("users/$uid/todoList").get();
 
-    List<TodoItem> todoList = [];
-
-    final todoItems = databaseEvent.children;
-
-    for (var todoItem in todoItems) {
-      Map<dynamic, dynamic> data = todoItem.value! as Map<dynamic, dynamic>;
-      String title = data["title"] as String;
-      bool done = data["done"] as bool;
-
-      todoList.add(TodoItem(title: title, done: done));
-    }
-
-    return todoList;
+    return databaseReference.children
+        .map(
+          (todoItem) {
+            final item = todoItem.value as Map;
+            return TodoItem(
+              key: todoItem.key,
+              title: item['title'],
+              done: item['done'],
+            );
+          },
+        )
+        .toList()
+        .reversed
+        .toList();
   }
+
+  // Future<void> updateTodoItem(TodoItem todoItem) async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final uid = prefs.getString('uid');
+  //   ref
+  //       .child('users')
+  //       .child(uid!)
+  //       .child('todoList')
+  //       .child(todoItem.key)
+  //       .update(todoItem.toJson());
+  // }
 }

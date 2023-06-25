@@ -39,6 +39,30 @@ mixin _$TodoItemStore on _TodoItemStore, Store {
     });
   }
 
+  late final _$todoListAtom =
+      Atom(name: '_TodoItemStore.todoList', context: context);
+
+  @override
+  List<TodoItem> get todoList {
+    _$todoListAtom.reportRead();
+    return super.todoList;
+  }
+
+  @override
+  set todoList(List<TodoItem> value) {
+    _$todoListAtom.reportWrite(value, super.todoList, () {
+      super.todoList = value;
+    });
+  }
+
+  late final _$refetchAsyncAction =
+      AsyncAction('_TodoItemStore.refetch', context: context);
+
+  @override
+  Future<void> refetch() {
+    return _$refetchAsyncAction.run(() => super.refetch());
+  }
+
   late final _$_TodoItemStoreActionController =
       ActionController(name: '_TodoItemStore', context: context);
 
@@ -68,7 +92,8 @@ mixin _$TodoItemStore on _TodoItemStore, Store {
   String toString() {
     return '''
 title: ${title},
-done: ${done}
+done: ${done},
+todoList: ${todoList}
     ''';
   }
 }

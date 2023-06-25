@@ -4,10 +4,13 @@ part 'todo_item_model.g.dart';
 
 @JsonSerializable()
 class TodoItem {
+  String? key;
   String title;
   bool done;
+  DateTime? timestamp = DateTime.now();
 
   TodoItem({
+    this.key,
     required this.title,
     required this.done,
   });

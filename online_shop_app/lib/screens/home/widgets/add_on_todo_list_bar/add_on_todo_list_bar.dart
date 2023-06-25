@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_list_app/models/todo_item/todo_item_model.dart';
 import 'package:todo_list_app/services/todo_list_service/todo_list_service.dart';
 import 'package:todo_list_app/stores/todo_item/todo_item_store.dart';
@@ -15,31 +14,12 @@ class AddOnTodoListBar extends StatefulWidget {
 }
 
 class _AddOnTodoListBarState extends State<AddOnTodoListBar> {
-  TodoItemStore todoItemStore = TodoItemStore();
-
-  void handleCreateTodoItem() async {
-    try {
-      await TodoListService()
-          .createTodoItem(
-            TodoItem(
-              title: todoItemStore.title,
-              done: false,
-            ),
-          )
-          .then(
-            (value) => log(
-              "Item adicionado com sucesso!!",
-            ),
-          );
-    } catch (error) {
-      log(
-        error.toString(),
-      );
-    }
-  }
+  TodoListService todoListService = TodoListService();
 
   @override
   Widget build(BuildContext context) {
+    TodoItemStore todoItemStore = Provider.of<TodoItemStore>(context);
+
     return TextField(
       onChanged: todoItemStore.setTitle,
       style: const TextStyle(
@@ -59,7 +39,12 @@ class _AddOnTodoListBarState extends State<AddOnTodoListBar> {
         ),
         suffixIcon: IconButton(
           icon: const Icon(Icons.add),
-          onPressed: handleCreateTodoItem,
+          onPressed: () async {
+            await todoListService.createTodoItem(
+              TodoItem(title: todoItemStore.title, done: todoItemStore.done),
+            );
+            todoItemStore.refetch();
+          },
         ),
       ),
     );
