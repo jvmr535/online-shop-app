@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:todo_list_app/screens/login/login_screen.dart';
 import 'package:todo_list_app/services/auth_service/auth_service.dart';
 import 'package:todo_list_app/stores/register/register_store/register_store.dart';
@@ -16,10 +17,11 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
     RegisterStore registerStore = RegisterStore();
+    final authService = GetIt.instance<AuthService>();
 
     handleSubmit() async {
       if (registerStore.isFormValid) {
-        await AuthService().registerWithEmailAndPassword(
+        await authService.registerWithEmailAndPassword(
           registerStore.email,
           registerStore.password,
           registerStore.displayName,

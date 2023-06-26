@@ -6,7 +6,8 @@ class DependencyInjection {
   static final GetIt getIt = GetIt.instance;
 
   Future<void> init() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    getIt.registerSingleton<SharedPreferences>(sharedPreferences);
     getIt.registerSingleton<AuthService>(AuthService());
-    getIt.registerSingletonAsync(() => SharedPreferences.getInstance());
   }
 }

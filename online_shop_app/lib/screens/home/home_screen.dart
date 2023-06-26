@@ -2,13 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:todo_list_app/models/todo_item/todo_item_model.dart';
 import 'package:todo_list_app/screens/home/widgets/add_on_todo_list_bar/add_on_todo_list_bar.dart';
 import 'package:todo_list_app/screens/home/widgets/todo_list/todo_list.dart';
 import 'package:todo_list_app/screens/login/login_screen.dart';
 import 'package:todo_list_app/services/auth_service/auth_service.dart';
 import 'package:todo_list_app/services/todo_list_service/todo_list_service.dart';
-import 'package:todo_list_app/stores/todo_item/todo_item_store.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -20,16 +20,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    TodoItemStore todoItems = TodoItemStore();
+    final authService = GetIt.I.get<AuthService>();
 
     return Scaffold(
-      backgroundColor: Colors.deepPurpleAccent,
       appBar: AppBar(
         actions: [
           IconButton(
+            color: Colors.white,
             onPressed: () async {
               try {
-                await AuthService().signOut();
+                await authService.signOut();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -50,7 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: Observer(builder: (_) {
-        final List<TodoItem> todoList = todoItems.todoList;
         return FutureBuilder<List<TodoItem>>(
           future: TodoListService().getTodoList(),
           builder: (context, snapshot) {
@@ -66,18 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
-                        : TodoList(
-                            todoList: todoList.isEmpty
-                                ? snapshot.data ?? []
-                                : todoList,
-                          ),
+                        : const TodoList(),
                   ),
-                  // ElevatedButton(
-                  //   onPressed: () async {
-                  //     await TodoListService().getTodoList();
-                  //   },
-                  //   child: const Text("Exibir"),
-                  // ),
                 ],
               ),
             );

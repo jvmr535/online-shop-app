@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:todo_list_app/screens/home/home_screen.dart';
 import 'package:todo_list_app/screens/register/register_screen.dart';
 import 'package:todo_list_app/services/auth_service/auth_service.dart';
@@ -19,9 +20,10 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     LoginStore loginStore = LoginStore();
+    final authService = GetIt.instance<AuthService>();
 
     handleSubmit() async {
-      await AuthService().signInWithEmailAndPassword(
+      await authService.signInWithEmailAndPassword(
         loginStore.email,
         loginStore.password,
       );

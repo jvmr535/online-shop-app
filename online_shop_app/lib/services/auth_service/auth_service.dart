@@ -1,10 +1,13 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final SharedPreferences _sharedPreferences =
+      GetIt.instance<SharedPreferences>();
 
   Future<void> registerWithEmailAndPassword(
     String email,
@@ -36,23 +39,21 @@ class AuthService {
       password: password,
     );
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('uid', user.user!.uid);
-    await prefs.setString('user', user.user!.email!);
+    await _sharedPreferences.setString('uid', user.user!.uid);
+    await _sharedPreferences.setString('user', user.user!.email!);
   }
 
   Future<void> signOut() async {
     await _auth.signOut();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('uid');
-    prefs.remove('user');
+    _sharedPreferences.remove('uid');
+    _sharedPreferences.remove('user');
   }
 
   Stream<User?> get user => _auth.authStateChanges();
 
   Future<String?> getCurrentUser() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('uid');
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getString('uid');
   }
 
   Future<void> sendPasswordResetEmail(String email) async {

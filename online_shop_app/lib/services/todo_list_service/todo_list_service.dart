@@ -4,12 +4,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_list_app/models/todo_item/todo_item_model.dart';
 
 class TodoListService {
-  DatabaseReference ref = FirebaseDatabase.instance.ref();
+  final firebaseInstance = FirebaseDatabase.instance;
   final prefs = GetIt.I.get<SharedPreferences>();
 
   Future<void> createTodoItem(TodoItem todoItem) async {
+    if (todoItem.title.isEmpty) return;
+
     final uid = prefs.getString('uid');
-    ref
+    firebaseInstance
+        .ref()
         .child('users')
         .child(uid!)
         .child('todoList')
@@ -40,15 +43,4 @@ class TodoListService {
         .reversed
         .toList();
   }
-
-  // Future<void> updateTodoItem(TodoItem todoItem) async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final uid = prefs.getString('uid');
-  //   ref
-  //       .child('users')
-  //       .child(uid!)
-  //       .child('todoList')
-  //       .child(todoItem.key)
-  //       .update(todoItem.toJson());
-  // }
 }
